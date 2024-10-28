@@ -9,13 +9,13 @@ import Foundation
 
 struct Calculator {
     
-    private struct AddOpreration {
+    private struct AddOperation {
         func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
             return firstNumber + secondNumber
         }
     }
     
-    private struct SubstractOpreration {
+    private struct SubstractOperation {
         func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
             return firstNumber - secondNumber
         }
