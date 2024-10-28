@@ -9,20 +9,26 @@ import Foundation
 
 struct Calculator {
     
-    func calculate(_ operator: Self.Operator, firstNumber: Double, secondNumber: Double ) -> Double {
+    func calculate(_ operator: Self.Operator, firstNumber: Int, secondNumber: Int ) {
+        
+        var operationString = "\(firstNumber) " + `operator`.rawValue + " \(secondNumber) = "
+        var answer: String
+        
         switch `operator`{
         case .add:
-            return AddOperation().calculate(firstNumber, secondNumber)
+            answer = String(AddOperation().calculate(firstNumber, secondNumber))
             
         case .substract:
-            return SubstractOperation().calculate(firstNumber, secondNumber)
+            answer = String(SubstractOperation().calculate(firstNumber, secondNumber))
             
         case .multiply:
-            return MultiplyOperation().calculate(firstNumber, secondNumber)
+            answer = String(MultiplyOperation().calculate(firstNumber, secondNumber))
 
         case .divide:
-            return DivideOperation().calculate(firstNumber, secondNumber)
+            answer = "\(DivideOperation().calculate(firstNumber,secondNumber))∙∙∙\(ReminderOperation().calculate(firstNumber, secondNumber))"
         }
+        
+        print(operationString + answer)
     }
     
     
