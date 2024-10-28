@@ -26,34 +26,45 @@ struct Calculator {
     }
     
     
-    private struct AddOperation {
-        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+    private protocol AbstractOperation {
+        func calculate(_ firstNumber: Int, _ secondNumber: Int) -> Int
+    }
+    
+    
+    private struct AddOperation: AbstractOperation {
+        func calculate(_ firstNumber: Int,_ secondNumber: Int) -> Int {
             return firstNumber + secondNumber
         }
     }
     
-    private struct SubstractOperation {
-        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+    private struct SubstractOperation: AbstractOperation {
+        func calculate(_ firstNumber: Int,_ secondNumber: Int) -> Int {
             return firstNumber - secondNumber
         }
     }
     
-    private struct MultiplyOperation {
-        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+    private struct MultiplyOperation: AbstractOperation {
+        func calculate(_ firstNumber: Int,_ secondNumber: Int) -> Int {
             return firstNumber * secondNumber
         }
     }
     
-    private struct DivideOperation {
-        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+    private struct DivideOperation: AbstractOperation {
+        func calculate(_ firstNumber: Int,_ secondNumber: Int) -> Int {
             return firstNumber / secondNumber
         }
     }
     
-    enum Operator {
-        case add
-        case substract
-        case multiply
-        case divide
+    private struct ReminderOperation: AbstractOperation {
+        func calculate(_ firstNumber: Int, _ secondNumber: Int) -> Int {
+            firstNumber % secondNumber
+        }
+    }
+    
+    enum Operator: String {
+        case add = "+"
+        case substract = "-"
+        case multiply = "*"
+        case divide = "/"
     }
 }
