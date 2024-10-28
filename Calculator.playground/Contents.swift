@@ -9,6 +9,23 @@ import Foundation
 
 struct Calculator {
     
+    func calculate(_ operator: Self.Operator, firstNumber: Double, secondNumber: Double ) -> Double {
+        switch `operator`{
+        case .add:
+            return AddOperation().calculate(firstNumber, secondNumber)
+            
+        case .substract:
+            return SubstractOperation().calculate(firstNumber, secondNumber)
+            
+        case .multiply:
+            return MultiplyOperation().calculate(firstNumber, secondNumber)
+
+        case .divide:
+            return DivideOperation().calculate(firstNumber, secondNumber)
+        }
+    }
+    
+    
     private struct AddOperation {
         func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
             return firstNumber + secondNumber
