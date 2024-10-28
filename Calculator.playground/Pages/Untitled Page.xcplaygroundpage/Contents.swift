@@ -79,23 +79,15 @@ struct Calculator {
             let firstNumberStr = firstNumber >= 0 ? "\(firstNumber)" : "(\(firstNumber))"
             let secondNumberStr = secondNumber >= 0 ? "\(secondNumber)" : "(\(secondNumber))"
             
-            //firstNumber가 Int.min일 경우
-            guard firstNumber != Int.min else {
-                if [0,1].contains(secondNumber) {
-                    print("\(firstNumberStr) ✖️ \(secondNumberStr) 🟰 \(firstNumber * secondNumber)")
-                } else {
-                    print("연산 범위를 초과하였습니다.")
-                }
+            // 특수 케이스 연산 (0 또는 1을 포함할 경우)
+            if [0,1].contains(firstNumber) || [0,1].contains(secondNumber) {
+                print("\(firstNumberStr) ✖️ \(secondNumberStr) 🟰 \(firstNumber * secondNumber)")
                 return
             }
             
-            //secondNumber가 Int.min일 경우
-            guard secondNumber != Int.min else {
-                if [0,1].contains(firstNumber) {
-                    print("\(firstNumberStr) ✖️ \(secondNumberStr) 🟰 \(firstNumber * secondNumber)")
-                } else {
-                    print("연산 범위를 초과하였습니다.")
-                }
+            //firstNumber나 secondNumber가 Int.min일 경우
+            guard firstNumber != Int.min && secondNumber != Int.min else {
+                print("연산 범위를 초과하였습니다.")
                 return
             }
             
@@ -103,13 +95,12 @@ struct Calculator {
             let secondNumberAbs = abs(secondNumber)
             
             //두 수의 절대값의 곱이 Int.max 이상일 경우 (단, Int의 나누기 연산으로 인해 오차 발생 가능)
-            guard [0,1].contains(firstNumberAbs) || [0,1].contains(secondNumberAbs) ||
-                    (firstNumberAbs <= Int.max / secondNumberAbs) else {
+            guard (firstNumberAbs <= Int.max / secondNumberAbs) else {
                 print("연산 범위를 초과하였습니다.")
                 return
             }
             
-            print("\(firstNumber) ✖️ \(secondNumber) 🟰 \(firstNumber * secondNumber)")
+            print("\(firstNumberStr) ✖️ \(secondNumberStr) 🟰 \(firstNumber * secondNumber)")
         }
     }
     
@@ -138,4 +129,3 @@ struct Calculator {
         case divide
     }
 }
-
