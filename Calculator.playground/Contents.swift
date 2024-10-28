@@ -9,6 +9,11 @@ import Foundation
 
 struct Calculator {
     
+    private struct AddOpreration {
+        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+            return firstNumber + secondNumber
+        }
+    }
     enum Operator {
         case add
         case substract
