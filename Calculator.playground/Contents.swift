@@ -21,6 +21,12 @@ struct Calculator {
         }
     }
     
+    private struct MultiplyOperation {
+        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+            return firstNumber * secondNumber
+        }
+    }
+    
     enum Operator {
         case add
         case substract
