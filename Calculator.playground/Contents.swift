@@ -14,6 +14,13 @@ struct Calculator {
             return firstNumber + secondNumber
         }
     }
+    
+    private struct SubstractOpreration {
+        func calculate(_ firstNumber: Double,_ secondNumber: Double) -> Double {
+            return firstNumber - secondNumber
+        }
+    }
+    
     enum Operator {
         case add
         case substract
