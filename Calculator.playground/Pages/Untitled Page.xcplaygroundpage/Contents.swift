@@ -67,7 +67,7 @@ struct Calculator {
         }
     }
 
-    
+    // 연산자 열거형
     enum Operator {
         case add
         case substract
