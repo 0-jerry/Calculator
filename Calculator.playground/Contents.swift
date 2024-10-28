@@ -9,4 +9,10 @@ import Foundation
 
 struct Calculator {
     
+    enum Operator {
+        case add
+        case substract
+        case multiply
+        case divide
+    }
 }
