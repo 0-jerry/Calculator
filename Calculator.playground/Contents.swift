@@ -74,3 +74,13 @@ struct Calculator {
         case divide = "/"
     }
 }
+
+
+let calculator = Calculator()
+
+calculator.calculate(.add, firstNumber: 10, secondNumber: 3)
+calculator.calculate(.substract, firstNumber: 10, secondNumber: 3)
+calculator.calculate(.multiply, firstNumber: 10, secondNumber: 3)
+calculator.calculate(.divide, firstNumber: 10, secondNumber: 3)
+
+print("end")
