@@ -40,5 +40,7 @@
 - `static func calculate(_ firstNumber: Int, _ secondNumber: Int)`
     - "firstNumber / secondNumber = 몫∙∙∙나머지" 출력
 
+</br>
+
 ### Operator 열거형
 - add, substract, multiply, divide
