@@ -10,13 +10,13 @@ import Foundation
 //MARK: - 계산기 구조체
 struct Calculator {
     // Operator 열거형을 통해 연산자 입력
-    static func calculate(_ operator: Operator, firstNumber: Int, secondNumber: Int) {
-        switch `operator`{
+    static func calculate(_ calculatorOperator: CalculatorOperator, firstNumber: Int, secondNumber: Int) {
+        switch calculatorOperator {
         case .add:
             AddOperation().calculate(firstNumber, secondNumber)
             
-        case .substract:
-            SubstractOperation().calculate(firstNumber, secondNumber)
+        case .subtract:
+            SubtractOperation().calculate(firstNumber, secondNumber)
             
         case .multiply:
             MultiplyOperation().calculate(firstNumber, secondNumber)
@@ -28,17 +28,17 @@ struct Calculator {
 }
 
 //MARK: - 연산자 열거형
-enum Operator: CustomStringConvertible {
+enum CalculatorOperator: CustomStringConvertible {
     
     case add
-    case substract
+    case subtract
     case multiply
     case divide
     
     var description: String {
         switch self {
         case .add: return "➕"
-        case .substract: return "➖"
+        case .subtract: return "➖"
         case .multiply: return "✖️"
         case .divide: return "➗"
         }
@@ -53,7 +53,7 @@ enum Operator: CustomStringConvertible {
 // calculate 메서드를 통해 에러 처리 후 결과값 출력
 private protocol AbstractOperation {
     
-    static var `operator`: Operator { get }
+    static var calculatorOperator: CalculatorOperator { get }
     
     func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int
 }
@@ -64,13 +64,14 @@ extension AbstractOperation {
         do {
             let result = try result(firstNumber,secondNumber)
             
-            printResult(firstNumber, secondNumber, result)
+            let stringForm = formTo(firstNumber, secondNumber, result)
+            print(stringForm)
             
-        //에러처리
+            //에러처리
         } catch AbstractOperationError.overFlow {
-            print("\(convertTo(firstNumber)) \(Self.`operator`.description) \(convertTo(secondNumber)) 연산은 오버플로우가 발생합니다.")
+            print("\(convertTo(firstNumber)) \(Self.calculatorOperator.description) \(convertTo(secondNumber)) 연산은 오버플로우가 발생합니다.")
         } catch AbstractOperationError.underFlow{
-            print("\(convertTo(firstNumber)) \(Self.`operator`.description) \(convertTo(secondNumber)) 연산은 언더플로우가 발생합니다.")
+            print("\(convertTo(firstNumber)) \(Self.calculatorOperator.description) \(convertTo(secondNumber)) 연산은 언더플로우가 발생합니다.")
         } catch AbstractOperationError.divideByZero {
             print("\(convertTo(secondNumber))으로는 나눌 수 없습니다.")
         } catch {
@@ -82,8 +83,8 @@ extension AbstractOperation {
         number >= 0 ? "\(number)" : "(\(number))"
     }
     
-    private func printResult(_ firstNumber: Int, _ secondNumber: Int,_ result: Int) {
-        print("\(convertTo(firstNumber)) \(Self.`operator`.description) \(convertTo(secondNumber)) = \(result)")
+    private func formTo(_ firstNumber: Int, _ secondNumber: Int,_ result: Int) -> String {
+        return "\(convertTo(firstNumber)) \(Self.calculatorOperator.description) \(convertTo(secondNumber)) = \(result)"
     }
 }
 
@@ -98,12 +99,12 @@ enum AbstractOperationError: Error {
 //MARK: - 덧셈 연산 구조체
 struct AddOperation: AbstractOperation {
     
-    static let `operator`: Operator = .add
+    static let calculatorOperator: CalculatorOperator = .add
     
     func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int {
         try checkOverFlow(firstNumber, secondNumber)
         try checkUnderFlow(firstNumber, secondNumber)
-
+        
         return firstNumber + secondNumber
     }
     
@@ -124,13 +125,13 @@ struct AddOperation: AbstractOperation {
 
 
 //MARK: - 뺄셈 연산 구조체
-struct SubstractOperation: AbstractOperation {
+struct SubtractOperation: AbstractOperation {
     
-    static let `operator`: Operator = .substract
+    static let calculatorOperator: CalculatorOperator = .subtract
     
     func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int {
         try checkOverFlow(firstNumber, secondNumber)
-        try checkUnberFlow(firstNumber, secondNumber)
+        try checkUnderFlow(firstNumber, secondNumber)
         
         return firstNumber + secondNumber
     }
@@ -143,7 +144,7 @@ struct SubstractOperation: AbstractOperation {
     }
     
     //언더 플로우 에러 처리
-    private func checkUnberFlow(_ firstNumber: Int,_ secondNumber: Int) throws {
+    private func checkUnderFlow(_ firstNumber: Int,_ secondNumber: Int) throws {
         guard Decimal(firstNumber) - Decimal(secondNumber) >= Decimal(Int.min) else {
             throw AbstractOperationError.underFlow(firstNumber, secondNumber)
         }
@@ -155,7 +156,7 @@ struct SubstractOperation: AbstractOperation {
 //MARK: - 곱셈 연산 구조체
 struct MultiplyOperation: AbstractOperation {
     
-    static let `operator`: Operator = .multiply
+    static let calculatorOperator: CalculatorOperator = .multiply
     
     func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int {
         try checkOverFlow(firstNumber, secondNumber)
@@ -183,7 +184,7 @@ struct MultiplyOperation: AbstractOperation {
 //MARK: - 나눗셈 연산 구조체
 struct DivideOperation: AbstractOperation {
     
-    static let `operator`: Operator = .divide
+    static let calculatorOperator: CalculatorOperator = .divide
     
     func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int {
         try checkDivideByZero(secondNumber)
