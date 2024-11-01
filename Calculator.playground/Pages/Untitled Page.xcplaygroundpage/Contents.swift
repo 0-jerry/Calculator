@@ -42,10 +42,10 @@ enum CalculatorOperator: CustomStringConvertible {
     
     var description: String {
         switch self {
-        case .add: return "➕"
-        case .subtract: return "➖"
-        case .multiply: return "✖️"
-        case .divide: return "➗"
+        case .add: return "+"
+        case .subtract: return "-"
+        case .multiply: return "*"
+        case .divide: return "/"
         case .reminder: return "%"
         }
     }
@@ -71,7 +71,7 @@ extension AbstractOperation {
             let stringForm = formTo(firstNumber, secondNumber, result)
             print(stringForm)
             
-            //에러처리
+        //에러처리
         } catch AbstractOperationError.overFlow {
             print("\(convertTo(firstNumber)) \(Self.calculatorOperator.description) \(convertTo(secondNumber)) 연산은 오버플로우가 발생합니다.")
         } catch AbstractOperationError.underFlow{
