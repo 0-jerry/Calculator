@@ -23,9 +23,13 @@ struct Calculator {
             
         case .divide:
             DivideOperation().calculate(firstNumber,secondNumber)
+            
+        case .reminder:
+            RemainderOperation().calculate(firstNumber, secondNumber)
         }
     }
 }
+
 
 //MARK: - 연산자 열거형
 enum CalculatorOperator: CustomStringConvertible {
@@ -34,6 +38,7 @@ enum CalculatorOperator: CustomStringConvertible {
     case subtract
     case multiply
     case divide
+    case reminder
     
     var description: String {
         switch self {
@@ -41,11 +46,10 @@ enum CalculatorOperator: CustomStringConvertible {
         case .subtract: return "➖"
         case .multiply: return "✖️"
         case .divide: return "➗"
+        case .reminder: return "%"
         }
     }
 }
-
-
 
 
 //MARK: - 추상 연산 프로토콜
@@ -87,6 +91,7 @@ extension AbstractOperation {
         return "\(convertTo(firstNumber)) \(Self.calculatorOperator.description) \(convertTo(secondNumber)) = \(result)"
     }
 }
+
 
 //MARK: - 추상 연산 에러
 enum AbstractOperationError: Error {
@@ -152,7 +157,6 @@ struct SubtractOperation: AbstractOperation {
 }
 
 
-
 //MARK: - 곱셈 연산 구조체
 struct MultiplyOperation: AbstractOperation {
     
@@ -199,3 +203,24 @@ struct DivideOperation: AbstractOperation {
         }
     }
 }
+
+
+//MARK: - 나머지 연산 구조체
+struct RemainderOperation: AbstractOperation {
+    
+    static var calculatorOperator: CalculatorOperator = .reminder
+    
+    func result(_ firstNumber: Int, _ secondNumber: Int) throws -> Int {
+        try checkDivideByZero(secondNumber)
+        
+        return firstNumber % secondNumber
+    }
+    
+    //0으로 나머지 연산을 시도할 경우 에러 처리
+    private func checkDivideByZero(_ secondNumber: Int) throws {
+        guard secondNumber != 0 else {
+            throw AbstractOperationError.divideByZero(secondNumber)
+        }
+    }
+}
+
